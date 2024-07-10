@@ -1,0 +1,58 @@
+void myblockfunction_zone1();
+void myblockfunction_red();
+void myblockfunction_green();
+
+float myVariable, Startdist, Zone1;
+
+event message1 = event();
+
+void myblockfunction_zone1() {
+  while (!(Distance7.distance(inches) < 1.0 && (Color8.detects(green) || Color8.detects(red)))) {
+    if (Distance7.distance(inches) < 1.0 && Color8.detects(red)) {
+      myblockfunction_red();
+      Zone1 = Zone1 + 1.0;
+    } else if (Distance7.distance(inches) < 1.0 && Color8.detects(green)) {
+      myblockfunction_green();
+      myVariable = Zone1 + 1.0;
+    } else {
+      Drivetrain.driveFor(forward, 1.0, inches, true);
+    }
+  wait(20, msec);
+  }
+}
+
+void myblockfunction_red() {
+  Drivetrain.driveFor(reverse, 5.0, inches, true);
+  Drivetrain.turnFor(left, 90.0, degrees, true);
+  Drivetrain.driveFor(forward, 10.0, inches, true);
+  SensorMotor.spinToPosition(0.0, degrees, true);
+  if (Color8.detects(yellow)) {
+    Drivetrain.turnFor(right, 90.0, degrees, true);
+    Drivetrain.driveFor(forward, 3.0, mm, true);
+  }
+  else {
+    Drivetrain.driveFor(forward, 1.0, inches, true);
+  }
+}
+
+void myblockfunction_green() {
+}
+
+int whenStarted1() {
+  Startdist = 0.0;
+  Zone1 = 0.0;
+  ArmMotor.spinFor(forward, 200.0, degrees, true);
+  Drivetrain.driveFor(forward, Startdist, mm, true);
+  while (!false) {
+    myblockfunction_zone1();
+  wait(20, msec);
+  }
+  return 0;
+}
+
+
+int main() {
+  calibrateDrivetrain();
+
+  whenStarted1();
+}
