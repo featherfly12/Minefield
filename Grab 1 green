@@ -1,0 +1,27 @@
+float myVariable, angle, dist, repeat1;
+
+int whenStarted1() {
+  myVariable = 0.0;
+  Color3.setLight(50, percent);
+  arm.spinFor(forward, 500.0, degrees, true);
+  while (!Color3.detects(green)) {
+    Drivetrain.driveFor(forward, 2.0, inches, true);
+    myVariable = myVariable + 2.0;
+  wait(20, msec);
+  }
+  arm.spinFor(reverse, 500.0, degrees, true);
+  Drivetrain.driveFor(forward, 13.0, inches, true);
+  claw.spinFor(forward, 70.0, degrees, true);
+  Drivetrain.driveFor(reverse, (myVariable + 22.0), inches, true);
+  Drivetrain.turnFor(left, 45.0, degrees, true);
+  claw.spinFor(reverse, 90.0, degrees, true);
+  arm.spinFor(forward, 500.0, degrees, true);
+  Drivetrain.turnFor(right, 45.0, degrees, true);
+}
+
+
+int main() {
+  calibrateDrivetrain();
+
+  whenStarted1();
+}
