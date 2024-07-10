@@ -1,0 +1,23 @@
+int Brain_precision = 0, Console_precision = 0;
+
+float myVariable, objects;
+
+int whenStarted1() {
+  Arm.spinFor(forward, 500.0, degrees, true);
+  Color3.setLight(50, percent);
+  while (!Color3.detects(green)) {
+    Drivetrain.driveFor(forward, 2.0, inches, true);
+  wait(20, msec);
+  }
+  Arm.spinFor(forward, 500.0, degrees, true);
+  Brain.playSound(siren);
+  Brain.Screen.print("green");
+  return 0;
+}
+
+
+int main() {
+  calibrateDrivetrain();
+
+  whenStarted1();
+}
