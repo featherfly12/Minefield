@@ -1,0 +1,76 @@
+void myblockfunction_zone1();
+void myblockfunction_red();
+void myblockfunction_green();
+
+float myVariable, Startdist, Zone1;
+
+event message1 = event();
+
+void myblockfunction_zone1() {
+  while (!(Distance9.distance(inches) < 1.0 && (Color3.detects(green) || Color3.detects(red)))) {
+    if (Distance9.distance(inches) < 1.0 && Color3.detects(red)) {
+      myblockfunction_red();
+      Zone1 = Zone1 + 1.0;
+    } else if (Distance9.distance(inches) < 1.0 && Color3.detects(green)) {
+      myblockfunction_green();
+      Zone1 = Zone1 + 1.0;
+    } else {
+      Drivetrain.driveFor(forward, 1.0, inches, true);
+    }
+  wait(20, msec);
+  }
+}
+
+void myblockfunction_red() {
+  Drivetrain.driveFor(reverse, 5.0, inches, true);
+  Drivetrain.turnFor(left, 90.0, degrees, true);
+  Drivetrain.driveFor(forward, 10.0, inches, true);
+  if (Color3.detects(blue)) {
+    Drivetrain.turnFor(right, 90.0, degrees, true);
+    Drivetrain.driveFor(forward, 3.0, mm, true);
+  }
+  else {
+    Drivetrain.driveFor(forward, 1.0, inches, true);
+  }
+}
+
+// User defined function
+void myblockfunction_green() {
+  ArmMotor.spinFor(reverse, 200.0, degrees, true);
+  ClawMotor.spinFor(forward, 90.0, degrees, true);
+  Drivetrain.driveFor(forward, 2.0, inches, true);
+  Drivetrain.turnFor(right, 180.0, degrees, true);
+  Drivetrain.driveFor(forward, (Startdist + 2.0), mm, true);
+  ClawMotor.spinFor(reverse, 90.0, degrees, true);
+  Drivetrain.driveFor(reverse, 2.0, mm, true);
+  ArmMotor.spinFor(forward, 200.0, degrees, true);
+  Drivetrain.turnFor(right, 180.0, degrees, true);
+  Drivetrain.driveFor(forward, Startdist, inches, true);
+  if (Zone1 < 3.0) {
+    myblockfunction_red();
+  }
+  else {
+    Drivetrain.turnFor(right, 90.0, degrees, true);
+    Drivetrain.driveFor(forward, 200.0, inches, true);
+  }
+}
+
+int whenStarted1() {
+  Startdist = 28.0;
+  Zone1 = 0.0;
+  Color3.syuetLight(50, percent);
+  ArmMotor.spinFor(forward, 600.0, degrees, true);
+  Drivetrain.driveFor(forward, Startdist, inches, true);
+  while (!(Zone1 == 3.0)) {
+    myblockfunction_zone1();
+  wait(20, msec);
+  }
+  return 0;
+}
+
+
+int main() {
+  calibrateDrivetrain();
+
+  whenStarted1();
+}
