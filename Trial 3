@@ -1,0 +1,118 @@
+float myVariable, angle, dist, repeat1, turn;
+
+int whenStarted1() {
+  myVariable = 0.0;
+  turn = 0.0;
+  Color3.setLight(50, percent);
+  arm.spinFor(forward, 500.0, degrees, true);
+  while (!Color3.detects(green)) {
+    if (Color3.detects(red)) {
+      turn = 1.0;
+      Drivetrain.driveFor(reverse, 33.0, inches, true);
+      Drivetrain.turnFor(left, 90.0, degrees, true);
+      Drivetrain.driveFor(forward, 18.0, inches, true);
+      Drivetrain.turnFor(right, 90.0, degrees, true);
+      myVariable = 0.0;
+    }
+    else {
+      Drivetrain.driveFor(forward, 2.0, inches, true);
+      myVariable = myVariable + 2.0;
+    }
+  wait(20, msec);
+  }
+  arm.spinFor(reverse, 500.0, degrees, true);
+  Drivetrain.driveFor(forward, 23.0, inches, true);
+  claw.spinFor(forward, 70.0, degrees, true);
+  Drivetrain.driveFor(reverse, (myVariable + 25.0), inches, true);
+  if (turn == 1.0) {
+    Drivetrain.turnFor(right, 45.0, degrees, true);
+  }
+  else {
+    Drivetrain.turnFor(left, 45.0, degrees, true);
+  }
+  claw.spinFor(reverse, 90.0, degrees, true);
+  arm.spinFor(forward, 500.0, degrees, true);
+  if (turn == 1.0) {
+    Drivetrain.turnFor(left, 45.0, degrees, true);
+  }
+  else {
+    Drivetrain.turnFor(right, 45.0, degrees, true);
+  }
+  if (turn == 1.0) {
+    Drivetrain.driveFor(forward, 400.0, mm, true);
+    Drivetrain.turnFor(right, 90.0, degrees, true);
+    Drivetrain.driveFor(forward, 26.0, inches, true);
+    Drivetrain.turnFor(left, 90.0, degrees, true);
+  }
+  turn = 0.0;
+  while (!Color3.detects(green)) {
+    if (Color3.detects(red)) {
+      Drivetrain.driveFor(reverse, 15.0, inches, true);
+      Drivetrain.turnFor(left, 90.0, degrees, true);
+      Drivetrain.driveFor(forward, 15.0, inches, true);
+      Drivetrain.turnFor(right, 90.0, degrees, true);
+      turn = turn + 1.0;
+      while (!Color3.detects(green)) {
+        Drivetrain.driveFor(forward, 2.0, inches, true);
+      wait(20, msec);
+      }
+    }
+    else {
+      Drivetrain.driveFor(forward, 2.0, inches, true);
+    }
+  wait(20, msec);
+  }
+  arm.spinFor(reverse, 500.0, degrees, true);
+  Drivetrain.driveFor(forward, 20.0, inches, true);
+  claw.spinFor(forward, 70.0, degrees, true);
+  Drivetrain.driveFor(reverse, (myVariable + 25.0), inches, true);
+  if (turn == 3.0) {
+    Drivetrain.turnFor(right, 45.0, degrees, true);
+  }
+  else {
+    Drivetrain.turnFor(left, 45.0, degrees, true);
+  }
+  claw.spinFor(reverse, 90.0, degrees, true);
+  arm.spinFor(forward, 500.0, degrees, true);
+  if (turn == 3.0) {
+    Drivetrain.turnFor(left, 45.0, degrees, true);
+  }
+  else {
+    Drivetrain.turnFor(right, 45.0, degrees, true);
+  }
+  Drivetrain.driveFor(forward, (myVariable + 37.0), inches, true);
+  repeat1 = 0.0;
+  while (true) {
+    while (!Color3.detects(green)) {
+      Drivetrain.turnFor(left, 5.0, degrees, true);
+      Drivetrain.driveFor(forward, 3.0, inches, true);
+      repeat1 = repeat1 + 1.0;
+    wait(20, msec);
+    }
+    arm.spinFor(reverse, 500.0, degrees, true);
+    Drivetrain.driveFor(forward, 20.0, inches, true);
+    claw.spinFor(forward, 80.0, degrees, true);
+    Drivetrain.driveFor(reverse, 12.0, inches, true);
+    repeat(repeat1) {
+      Drivetrain.turnFor(right, 5.0, degrees, true);
+      Drivetrain.driveFor(reverse, 3.0, inches, true);
+      wait(20, msec);
+    }
+    Drivetrain.driveFor(reverse, (myVariable + 28.0), inches, true);
+    Drivetrain.turnFor(left, 45.0, degrees, true);
+    claw.spinFor(reverse, 90.0, degrees, true);
+    arm.spinFor(forward, 500.0, degrees, true);
+    Drivetrain.turnFor(right, 45.0, degrees, true);
+    Drivetrain.driveFor(forward, (myVariable + 28.0), inches, true);
+    repeat1 = 0.0;
+  wait(20, msec);
+  }
+  return 0;
+}
+
+
+int main() {
+  calibrateDrivetrain();
+
+  whenStarted1();
+}
